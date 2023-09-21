@@ -10,13 +10,13 @@ const App = () => {
 
   return (
     <div className="App">
-    <header className="App-header">
+      <header className="App-header">
         <p>Buy now!</p>
         <button className="btn" onClick={displayRazorpay}>
-            Pay ₹500
+          Pay ₹500
         </button>
-    </header>
-</div>
+      </header>
+    </div>
   )
 }
 
