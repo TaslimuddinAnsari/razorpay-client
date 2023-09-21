@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.btn {
+  background-color: #007BFF; /* Background color */
+  color: #FFFFFF; /* Text color */
+  padding: 10px 20px; /* Padding (top/bottom, left/right) */
+  border: none; /* Remove the default button border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Add a pointer cursor on hover */
+}
+
+/* CSS for button hover effect */
+.btn:hover {
+  background-color: #0056b3; /* New background color on hover */
+}
