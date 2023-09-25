@@ -1,0 +1,17 @@
+:root{
+    
+    /* colors */
+    --background-color:#007BFF;
+    --text-color: #FFFFFF;
+    --btn-hover:#0056b3;
+    --box-shadow: rgba(0,0,0,0.2);
+
+
+    /* fonts */
+    --font-family-1:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    --font-weight-1:400;
+
+    /* font-size */
+    --font-size:16px;
+    --heading-font:25px;
+}

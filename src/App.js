@@ -1,11 +1,14 @@
-import React from 'react'
-import './App.css';
-import axios from 'axios'
+import React from "react";
+import "./App.css";
+import axios from "axios";
+import ProductedCard from "./component/ProductedCard";
+import { getProductList } from "./mock-data";
 
 const App = () => {
+  const prodData = getProductList();
   function loadScript(src) {
     return new Promise((resolve) => {
-      const script = document.createElement('script');
+      const script = document.createElement("script");
       script.src = src;
       script.onload = () => {
         resolve(true);
@@ -16,32 +19,37 @@ const App = () => {
       document.body.appendChild(script);
     });
   }
-  async function handlePayment(){
+  async function handlePayment(priceValue) {
+    const payValue = priceValue;
+    console.log(payValue)
     const res = await loadScript(
-      'https://checkout.razorpay.com/v1/checkout.js'
+      "https://checkout.razorpay.com/v1/checkout.js"
     );
     if (!res) {
-      alert('Razorpay SDK failed to load. Are you online?');
+      alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
     let paymentData = {
-      amount: '300', 
-      currency:'INR',
-      payment_capture:1 
-    }
-    const result = await axios.post('http://localhost:5000/payment/orders', paymentData);
+      amount: payValue,
+      currency: "INR",
+      payment_capture: 1,
+    };
+    const result = await axios.post(
+      "http://localhost:5000/payment/orders",
+      paymentData
+    );
 
     if (!result) {
-      alert('Server error. Are you online?');
+      alert("Server error. Are you online?");
       return;
     }
     const { amount, id: order_id, currency } = result.data.data;
     const options = {
       key: process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
-      amount:amount.toString(),
+      amount: amount.toString(),
       currency: currency,
-      name: 'Payment Testing .',
-      description: 'Test Transaction',
+      name: "Payment Testing .",
+      description: "Test Transaction",
       order_id: order_id,
       handler: async function (response) {
         const data = {
@@ -51,37 +59,38 @@ const App = () => {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await axios.post('http://localhost:5000/payment/success', data);
+        const result = await axios.post(
+          "http://localhost:5000/payment/success",
+          data
+        );
 
         alert(result.data.msg);
       },
       prefill: {
-        name: 'Anna',
-        email: 'demo@example.com',
-        contact: '1234567890',
+        name: "Anna",
+        email: "demo@example.com",
+        contact: "1234567890",
       },
       notes: {
-        address: 'E-commerce',
+        address: "E-commerce",
       },
       theme: {
-        color: 'lightdark',
+        color: "blue",
       },
     };
 
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
-  };
+  }
 
   return (
     <div className="App">
       <header className="App-header">
-        <p>Buy now!</p>
-        <button className="btn" onClick={()=> handlePayment(300)}>
-          Pay ₹300
-        </button>
+        <p className="heading-text">Buy now!</p>
+        <ProductedCard prodData={prodData} handlePayment={handlePayment} />
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
