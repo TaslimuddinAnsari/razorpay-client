@@ -6,6 +6,9 @@ import { getProductList } from "./mock-data";
 
 const App = () => {
   const prodData = getProductList();
+
+  // Using Handler Function 
+
   function loadScript(src) {
     return new Promise((resolve) => {
       const script = document.createElement("script");
@@ -48,8 +51,9 @@ const App = () => {
       key: process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),
       currency: currency,
-      name: "Payment Testing .",
+      name: "Payment Testing.",
       description: "Test Transaction",
+      image: "https://example.com/https://banner2.cleanpng.com/20180329/zue/kisspng-computer-icons-user-profile-person-5abd85306ff7f7.0592226715223698404586.jpg",
       order_id: order_id,
       handler: async function (response) {
         const data = {
@@ -60,7 +64,7 @@ const App = () => {
         };
 
         const result = await axios.post(
-          "http://localhost:5000/payment/success",
+          "http://localhost:5000/payment/verify",
           data
         );
 
