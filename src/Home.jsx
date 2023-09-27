@@ -24,15 +24,15 @@ const Home = () => {
       alert("Server error. Are you online?");
       return;
     }
-    const { amount, id: order_id, currency } = result.data.data;
+    const { amount, id, currency } = result.data.data;
     const options = {
-        key: process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
         amount: amount,
         currency:  currency || "INR",
         name: "Payment Testing.",
         description: "Tutorial of RazorPay",
         image: "https://example.com/https://banner2.cleanpng.com/20180329/zue/kisspng-computer-icons-user-profile-person-5abd85306ff7f7.0592226715223698404586.jpg",
-        order_id: order_id,
+        order_id: id,
         callback_url: "http://localhost:5000/payment/verify",
         prefill: {
             name: "Anna",

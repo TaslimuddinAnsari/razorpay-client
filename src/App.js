@@ -24,7 +24,6 @@ const App = () => {
   }
   async function handlePayment(priceValue) {
     const payValue = priceValue;
-    console.log(payValue)
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -46,18 +45,18 @@ const App = () => {
       alert("Server error. Are you online?");
       return;
     }
-    const { amount, id: order_id, currency } = result.data.data;
+    const { amount, id, currency } = result.data.data;
     const options = {
-      key: process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+      key: process.env.REACT_APP_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),
       currency: currency,
       name: "Payment Testing.",
       description: "Test Transaction",
-      image: "https://example.com/https://banner2.cleanpng.com/20180329/zue/kisspng-computer-icons-user-profile-person-5abd85306ff7f7.0592226715223698404586.jpg",
-      order_id: order_id,
+      // image: "https://example.com/https://banner2.cleanpng.com/20180329/zue/kisspng-computer-icons-user-profile-person-5abd85306ff7f7.0592226715223698404586.jpg",
+      order_id: id,
       handler: async function (response) {
         const data = {
-          orderCreationId: order_id,
+          orderCreationId: id,
           razorpayPaymentId: response.razorpay_payment_id,
           razorpayOrderId: response.razorpay_order_id,
           razorpaySignature: response.razorpay_signature,
@@ -82,7 +81,6 @@ const App = () => {
         color: "blue",
       },
     };
-
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
